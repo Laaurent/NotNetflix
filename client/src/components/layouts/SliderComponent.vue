@@ -2,9 +2,12 @@
    <div class="slider-container px-12 mb-12">
       <h3 class="text-lg">{{ array_title[title] }}</h3>
       <div class="slider-container__items flex gap-2 flex-nowrap w-full overflow-x-auto py-4">
-         <div class="item w-40 h-24 flex-none" v-for="(item, index) in data" :key="'item-' + title + '_' + index">
-            {{ item }}
-         </div>
+         <div
+            style="background-image: url('https://static.tvmaze.com/uploads/images/medium_portrait/0/2400.jpg')"
+            class="item w-36 h-56 flex-none bg-center bg-cover rounded"
+            v-for="(item, index) in data"
+            :key="'item-' + title + '_' + index"
+         ></div>
       </div>
    </div>
 </template>
