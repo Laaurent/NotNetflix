@@ -1,15 +1,18 @@
-const { User } = require('../models');
+const { User, Role } = require('../models');
+let bcrypt = require('bcryptjs');
 
 const createUser = async (req, res) => {
-  console.log(req.body)
-
   const { username, password } = req.body;
   const user = await User.create({
     username,
-    password
+    password:  bcrypt.hashSync(password, 8),
   });
-
-  return res.json(user);
+  if (user) {
+    let role = await user.setRole(await Role.findOne({where: {name: 'USER'}}))
+    if (role) {
+      res.status(200).send('User created')
+    }else res.status(400).send('User not created')
+  }else res.status(400).send('User not created')
 }
 
 const updateUser = async (req, res) => {

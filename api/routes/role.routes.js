@@ -1,5 +1,5 @@
 
-var handlers = require('../handlers/role.handler')
+let handlers = require('../handlers/role.handler')
 module.exports = function(app, Joi, validator){
     const roleSchema = Joi.object({
         name: Joi.string().required(),
