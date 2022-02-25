@@ -1,9 +1,9 @@
 <template>
    <div>
-      <div class="z-50 h-mysize flex absolute">
-         <div class="item px-12 w-2/5 self-center flex flex-col gap-4">
+      <div class="z-10 h-mysize flex absolute">
+         <div class="item px-12 w-3/5 self-center flex flex-col gap-4">
             <div class="item__title">
-               <h1 class="text-5xl">Breaking Bad</h1>
+               <h1 class="text-4xl">Breaking Bad</h1>
             </div>
             <div class="item__resume">
                <p class="line-clamp-3">
@@ -15,8 +15,14 @@
                </p>
             </div>
             <div class="item_actions flex gap-2">
-               <button class="btn px-5 py-2 text-xl rounded bg-white text-black">Lecture</button>
-               <button class="btn px-5 py-2 text-xl rounded bg-neutral-500">Plus d'infos</button>
+               <button class="btn flex items-center gap-2 px-5 py-2 text-xl rounded bg-white text-black">
+                  <IconsComponent icon="play" color="black"></IconsComponent>
+                  Lecture
+               </button>
+               <button class="btn flex items-center gap-2 px-5 py-2 text-xl rounded bg-neutral-500">
+                  <IconsComponent icon="info" color="white"></IconsComponent>
+                  Plus d'infos
+               </button>
             </div>
          </div>
       </div>
@@ -27,11 +33,12 @@
 </template>
 
 <script>
-export default {};
+import IconsComponent from "../IconsComponent.vue";
+export default { components: { IconsComponent } };
 </script>
 
 <style>
 .h-mysize {
-   height: 58vh;
+   height: 65vh;
 }
 </style>

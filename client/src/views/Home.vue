@@ -8,7 +8,7 @@ import SliderComponent from "@/components/layouts/SliderComponent.vue";
    <header>
       <HeaderComponent></HeaderComponent>
    </header>
-   <div>
+   <div class="px-12">
       <SliderComponent title="success"></SliderComponent>
       <SliderComponent title="trends"></SliderComponent>
       <SliderComponent title="news"></SliderComponent>
