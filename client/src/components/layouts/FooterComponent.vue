@@ -1,11 +1,11 @@
 <template>
    <div class="footer text-xs text-neutral-500 flex justify-center pt-6">
       <div class="flex flex-col">
-         <div class="footer__networks flex py-2 text-white">
-            <div class="footer__networks_item">F</div>
-            <div class="footer__networks_item">I</div>
-            <div class="footer__networks_item">T</div>
-            <div class="footer__networks_item">Y</div>
+         <div class="footer__networks flex py-2">
+            <div class="footer__networks_item"><IconsComponent icon="facebook" color="white"></IconsComponent></div>
+            <div class="footer__networks_item"><IconsComponent icon="instagram" color="white"></IconsComponent></div>
+            <div class="footer__networks_item"><IconsComponent icon="twitter" color="white"></IconsComponent></div>
+            <div class="footer__networks_item"><IconsComponent icon="youtube" color="white"></IconsComponent></div>
          </div>
          <div class="footer__links flex gap-24 py-2 w-11/12">
             <div class="footer__links_item">
@@ -49,7 +49,13 @@
 </template>
 
 <script>
-export default {};
+import IconsComponent from "@/components/IconsComponent.vue";
+export default {
+   name: "FooterComponent",
+   components: {
+      IconsComponent,
+   },
+};
 </script>
 
 <style></style>
