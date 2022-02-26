@@ -10,26 +10,27 @@ let verifyToken = async (req, res, next) => {
        res.status(403).send({
             message: 'Token vide',
         });
-    }
+    }else{
 
-    jwt.verify(token, config.secret, async (err, decoded) => {
-        if (err) {
-           res.status(401).send({
-                message: 'Token invalid',
-            });
-        } else {
-            try{
-                let user = await models.User.findByPk(decoded.id)
-                if (user) next()
-                else res.status(403).send({message: 'Token corrompu'})
-            }catch(e){
-                console.log(e)
-                res.status(404).send({
-                    message: e,
+        jwt.verify(token, config.secret, async (err, decoded) => {
+            if (err) {
+               res.status(401).send({
+                    message: 'Token invalid',
                 });
+            } else {
+                try{
+                    let user = await models.User.findByPk(decoded.id)
+                    if (user) next()
+                    else res.status(403).send({message: 'Token corrompu'})
+                }catch(e){
+                    console.log(e)
+                    res.status(404).send({
+                        message: e,
+                    });
+                }
             }
-        }
-    });
+        });
+    }
 };
 
 let checkIdentity = async (req, res, next) => {

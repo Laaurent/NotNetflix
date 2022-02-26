@@ -20,7 +20,11 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       primaryKey: true,
    },
-    content: DataTypes.STRING
+    content: DataTypes.STRING,
+    showId: DataTypes.INTEGER,
+    seasonId: DataTypes.INTEGER,
+    episodeId: DataTypes.INTEGER,
+    special: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Comment',

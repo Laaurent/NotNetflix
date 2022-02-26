@@ -1,14 +1,15 @@
-const {Commentaire, User} = require("../models")
+const {Comment, User} = require("../models")
 const jwt = require('jsonwebtoken');
+const { Op } = require("sequelize");
 
 exports.createCommentaire = async(req,res) => {
-    const {content} = req.body.content
-    const decodedId = jwt.decode(req.cookies.authCookie)
+    const {content,showId,seasonId,episodeId,special} = req.body
+    const decoded = jwt.decode(req.cookies.authCookie)
 
     try{
-        const user = User.findByPk(decodedId);
-        if (condition) {
-            const commentaire = await Commentaire.create(content)
+        const user = await User.findByPk(decoded.id);
+        if (user) {
+            const commentaire = await Comment.create({content,showId,seasonId,episodeId,special})
             if (commentaire) {
                 let author = await commentaire.setUser(user)
                 if (author) {
@@ -25,7 +26,7 @@ exports.createCommentaire = async(req,res) => {
 }
 exports.modifyCommentaire = async(req,res) => {
     // res.send('ALL Commentaires')
-    const commentaire = await Commentaire.update(req.body,{where:{
+    const commentaire = await Comment.update(req.body,{where:{
         id: req.params.id
     }})
     .then((res)=>{
@@ -37,7 +38,7 @@ exports.modifyCommentaire = async(req,res) => {
 }
 exports.deleteCommentaire = async(req,res) => {
     // res.send('ALL Commentaires')
-    const commentaire = await Commentaire.destroy({
+    const commentaire = await Comment.destroy({
         where: {
             id: req.params.id
         }
@@ -51,9 +52,12 @@ exports.deleteCommentaire = async(req,res) => {
 }
 exports.showCommentaire = async(req,res) => {
     // res.send('ALL Commentaires')
-    const commentaire = await Commentaire.findOne({
+    let {season, episode} = req.query
+    const commentaire = await Comment.findOne({
         where: {
-            id: req.params.id
+            id: req.params.id,
+            seasonId: season,
+            episodeId: episode
         }
     })
     .then((res)=>{
@@ -64,14 +68,24 @@ exports.showCommentaire = async(req,res) => {
     })
 }
 exports.showCommentaires = async(req,res) => {
-    // res.send('ALL Commentaires')
-    const commentaire = await Commentaire.findAll()
-    .then((res)=>{
-        res.send('Show All')
-    })
-    .catch((err)=>{
-        res.status(400).send({message: "Bad Request"})
-    })
+    console.log(req.query)
+    const query = req.query
+    try{
+        const commentaire = await Comment.findAll({where:{
+            showId: req.params.id,
+            [Op.and]:[{
+                ...query
+            }]
+        }})
+        if (commentaire) {
+            console.log(commentaire)
+            res.status(200).json(commentaire)
+        }else{
+            res.status(400).send({message: "Bad Request"})
+        }
+    }catch(e){
+console.log(e)
+    }
 }
 
 

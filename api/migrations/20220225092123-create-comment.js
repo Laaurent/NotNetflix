@@ -11,6 +11,10 @@ module.exports = {
       content: {
         type: Sequelize.STRING
       },
+      showId: Sequelize.INTEGER,
+      seasonId: Sequelize.INTEGER,
+      episodeId: Sequelize.INTEGER,
+      special: Sequelize.INTEGER,
       userId: {
         type: Sequelize.INTEGER,
         references: {
