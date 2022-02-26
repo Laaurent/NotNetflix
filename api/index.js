@@ -14,7 +14,6 @@ require('./routes/auth.routes')(app,Joi,validator)
 require('./routes/user.routes')(app, Joi, validator)
 require('./routes/commentaire.routes')(app, Joi, validator)
 require('./routes/role.routes')(app,Joi,validator)
-require('./routes/show.routes')(app,Joi,validator)
 
 
 app.post('/',async (req,res) => {

@@ -68,7 +68,7 @@ exports.showCommentaire = async(req,res) => {
     })
 }
 exports.showCommentaires = async(req,res) => {
-    console.log(req.query)
+    // console.log(req.query)
     const query = req.query
     try{
         const commentaire = await Comment.findAll({where:{
@@ -78,7 +78,7 @@ exports.showCommentaires = async(req,res) => {
             }]
         }})
         if (commentaire) {
-            console.log(commentaire)
+            // console.log(commentaire)
             res.status(200).json(commentaire)
         }else{
             res.status(400).send({message: "Bad Request"})
