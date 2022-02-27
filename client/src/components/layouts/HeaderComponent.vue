@@ -26,7 +26,7 @@
             </div>
          </div>
       </div>
-      <div class="bg-gradient-to-t absolute h-5/6 h-mysize w-screen from-neutral-900"></div>
+      <div class="bg-gradient-to-t absolute h-5/6 h-mysize w-full from-neutral-900"></div>
 
       <div class="h-mysize bg-center bg-cover" style="background-image: url('https://static.tvmaze.com/uploads/images/original_untouched/0/2400.jpg')"></div>
    </div>
@@ -37,7 +37,7 @@ import IconsComponent from "../IconsComponent.vue";
 export default { components: { IconsComponent } };
 </script>
 
-<style>
+<style scoped>
 .h-mysize {
    height: 65vh;
 }
