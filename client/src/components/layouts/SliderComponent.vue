@@ -1,5 +1,5 @@
 <template>
-   <div class="slider-container px-12 mb-12">
+   <div class="slider-container mb-12">
       <h3 class="text-lg">{{ array_title[title] }}</h3>
       <div class="slider-container__items flex gap-2 flex-nowrap w-full overflow-x-auto py-4">
          <CardComponent v-for="(item, index) in data" :key="'item-' + title + '_' + index" :item="item"></CardComponent>
