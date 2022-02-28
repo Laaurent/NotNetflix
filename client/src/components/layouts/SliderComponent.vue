@@ -1,17 +1,27 @@
 <template>
-   <div class="slider-container px-12 mb-12">
+   <div class="slider-container mb-12">
       <h3 class="text-lg">{{ array_title[title] }}</h3>
-      <div class="slider-container__items flex gap-2 flex-nowrap w-full overflow-x-auto py-4">
-         <CardComponent v-for="(item, index) in data" :key="'item-' + title + '_' + index" :item="item"></CardComponent>
+      <div class="slider-container__items overflow-x-show flex h-80 w-full flex-nowrap items-center gap-2 overflow-x-auto rounded py-4 px-4">
+         <!-- <CardComponent
+        v-for="(show, index) in shows"
+        :key="'item-' + title + '_' + index"
+        :item="show"
+      ></CardComponent> -->
+         <slot></slot>
       </div>
    </div>
 </template>
 
 <script>
+import { toRefs } from "vue";
 import CardComponent from "./CardComponent.vue";
+
 export default {
-   props: ["title"],
-   setup() {
+   name: "SliderComponent",
+   props: ["title", "shows"],
+   components: { CardComponent },
+   setup(props) {
+      const { shows, title } = toRefs(props);
       let array_title = {
          success: "Les plus gros succès sur Netflix",
          trends: "Tendances actuelles",
@@ -19,10 +29,8 @@ export default {
          top: "Top 10 en France aujourd'hui",
          documentary: "Documentaires",
       };
-      let data = Array(20).fill(0);
-      return { array_title, data };
+      return { array_title, shows, title };
    },
-   components: { CardComponent },
 };
 </script>
 

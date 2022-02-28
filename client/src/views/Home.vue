@@ -1,18 +1,43 @@
-<script setup>
-import ButtonRepo from "@/components/ButtonRepo.vue";
+<script>
 import HeaderComponent from "@/components/layouts/HeaderComponent.vue";
 import SliderComponent from "@/components/layouts/SliderComponent.vue";
+import { useShows } from "@/store/useShows";
+
+import { onMounted, ref } from "@vue/runtime-core";
+import PreviewComponent from "@/components/layouts/PreviewComponent.vue";
+import CardComponent from "@/components/layouts/CardComponent.vue";
+export default {
+   name: "Home",
+   components: {
+      HeaderComponent,
+      SliderComponent,
+      PreviewComponent,
+      CardComponent,
+   },
+   setup() {
+      let is_open = ref(false);
+      const categories = ["success", "trends", "news", "top", "documentary"];
+      const store = useShows();
+      onMounted(() => {
+         categories.forEach((cat, idx) => store.getShows(idx));
+      });
+      let shows = ref(store.shows);
+      /* let shows = ref([]); */
+      return { is_open, store, categories, shows };
+   },
+};
 </script>
 
 <template>
-   <header>
-      <HeaderComponent></HeaderComponent>
-   </header>
-   <div>
-      <SliderComponent title="success"></SliderComponent>
-      <SliderComponent title="trends"></SliderComponent>
-      <SliderComponent title="news"></SliderComponent>
-      <SliderComponent title="top"></SliderComponent>
-      <SliderComponent title="documentary"></SliderComponent>
-   </div>
+   <article>
+      <header>
+         <HeaderComponent></HeaderComponent>
+      </header>
+      <div class="px-12">
+         <SliderComponent v-for="(category, idx) in categories" :key="category" :shows="shows[idx]" :title="category">
+            <CardComponent v-for="(show, index) in shows[idx]" :key="'item-' + category + '_' + index" :item="show" @click="is_open = true"></CardComponent>
+         </SliderComponent>
+      </div>
+      <PreviewComponent :is_open="is_open" @update:is_open="is_open = $event"></PreviewComponent>
+   </article>
 </template>
