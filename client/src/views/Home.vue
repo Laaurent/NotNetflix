@@ -1,6 +1,8 @@
 <script>
-import HeaderComponent from "@/components/layouts/HeaderComponent.vue";
+import HeroComponent from "@/components/layouts/HeroComponent.vue";
 import SliderComponent from "@/components/layouts/SliderComponent.vue";
+import NavbarComponent from "@/components/layouts/NavbarComponent.vue";
+import FooterComponent from "@/components/layouts/FooterComponent.vue";
 import { useShows } from "@/store/useShows";
 
 import { onMounted, ref } from "@vue/runtime-core";
@@ -10,10 +12,12 @@ import axios from "axios";
 export default {
    name: "Home",
    components: {
-      HeaderComponent,
+      HeroComponent,
       SliderComponent,
       PreviewComponent,
       CardComponent,
+      NavbarComponent,
+      FooterComponent
    },
    setup() {
       let is_open = ref(false);
@@ -42,10 +46,15 @@ export default {
 </script>
 
 <template>
+<div class="bg-neutral-900 text-sm text-white">
+
+   <header>
+      <NavbarComponent></NavbarComponent>
+</header>
    <article>
-      <header>
-         <HeaderComponent></HeaderComponent>
-      </header>
+      <section>
+         <HeroComponent></HeroComponent>
+      </section>
       <div class="px-12">
          <SliderComponent v-for="(category, idx) in categories" :key="category" :shows="shows[idx]" :title="category">
             <CardComponent
@@ -62,4 +71,10 @@ export default {
       </div>
       <PreviewComponent :show="show_tmp" :show_episodes="show_episodes" :is_open="is_open" @update:is_open="is_open = $event"></PreviewComponent>
    </article>
+         <footer>
+            <FooterComponent></FooterComponent>
+      </footer>
+
+            </div>
+
 </template>
