@@ -34,4 +34,24 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+* {
+   scrollbar-width: thin;
+   scrollbar-color: black rgb(23 23 23);
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+   width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+   background: rgb(23 23 23);
+}
+
+*::-webkit-scrollbar-thumb {
+   background-color: black;
+   border-radius: 20px;
+   border: 3px solid rgb(23 23 23);
+}
+</style>

@@ -62,9 +62,7 @@
                               <span class="font-semibold">5 saisons</span>
                            </div>
                            <div class="description__left_resume">
-                              <p class="text-sm">
-                                 {{ show.summary.slice(3).slice(0, -4) }}
-                              </p>
+                              <p class="text-sm" v-html="show.summary.slice(3).slice(0, -4)"></p>
                            </div>
                         </div>
                         <div class="description__right flex-none w-60 flex flex-col gap-4 text-sm">
