@@ -9,7 +9,14 @@
       leave-from="opacity-100"
       leave-to="opacity-0"
    >
-      <Dialog :open="is_open" @close="setIsOpen" class="fixed inset-0 z-30 overflow-y-auto">
+      <Dialog
+         :open="is_open"
+         @close="
+            setIsOpen(false);
+            season = 1;
+         "
+         class="fixed inset-0 z-30 overflow-y-auto"
+      >
          <div class="flex items-center justify-center min-h-screen">
             <DialogOverlay class="fixed inset-0 bg-black opacity-70" />
 
@@ -18,7 +25,14 @@
                   <div class="header">
                      <div class="px-12 header__text z-10 h-mysize w-full flex absolute flex-col justify-between py-8">
                         <div class="header__text_close flex flex-row-reverse">
-                           <button @click="setIsOpen(false)"><IconsComponent icon="close" color="white"></IconsComponent></button>
+                           <button
+                              @click="
+                                 setIsOpen(false);
+                                 season = 1;
+                              "
+                           >
+                              <IconsComponent icon="close" color="white"></IconsComponent>
+                           </button>
                         </div>
                         <div class="header__text_content flex flex-col gap-2 py-8">
                            <h2 class="text-3xl font-semibold" v-html="show.name"></h2>
