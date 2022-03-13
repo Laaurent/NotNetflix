@@ -9,19 +9,33 @@
       leave-from="opacity-100"
       leave-to="opacity-0"
    >
-      <Dialog :open="is_open" @close="setIsOpen" class="fixed inset-0 z-30 overflow-y-auto">
+      <Dialog
+         :open="is_open"
+         @close="
+            setIsOpen(false);
+            season = 1;
+         "
+         class="fixed inset-0 z-30 overflow-y-auto"
+      >
          <div class="flex items-center justify-center min-h-screen">
             <DialogOverlay class="fixed inset-0 bg-black opacity-70" />
 
-            <div class="relative mx-auto bg-neutral-900 rounded text-white w-mysize rounded-xl overflow-hidden my-10">
+            <div class="relative mx-auto bg-neutral-900 pb-6 rounded text-white w-mysize rounded-xl overflow-hidden my-10">
                <DialogTitle>
                   <div class="header">
                      <div class="px-12 header__text z-10 h-mysize w-full flex absolute flex-col justify-between py-8">
                         <div class="header__text_close flex flex-row-reverse">
-                           <button @click="setIsOpen(false)"><IconsComponent icon="close" color="white"></IconsComponent></button>
+                           <button
+                              @click="
+                                 setIsOpen(false);
+                                 season = 1;
+                              "
+                           >
+                              <IconsComponent icon="close" color="white"></IconsComponent>
+                           </button>
                         </div>
                         <div class="header__text_content flex flex-col gap-2 py-8">
-                           <h2 class="text-3xl font-semibold">{{ show.name }}</h2>
+                           <h2 class="text-3xl font-semibold" v-html="show.name"></h2>
                            <div class="header__text_content_buttons flex gap-2 items-center">
                               <button class="btn flex items-center gap-2 px-5 py-1 text-xl rounded bg-white text-black">
                                  <IconsComponent icon="play" color="black"></IconsComponent>
@@ -92,10 +106,15 @@
                         ></EpisodeCardComponent>
                      </section>
                   </div>
-
                   <div>
-                     <button @click="setIsOpen(false)">Deactivate</button>
-                     <button @click="setIsOpen(false)">Cancel</button>
+                     <h2 class="text-xl">
+                        À propos de <strong>{{ show.name }}</strong>
+                     </h2>
+                  </div>
+                  <div class="description__right flex-none w-full flex flex-col gap-1 text-sm">
+                     <p><span class="text-neutral-500">Creator :</span> {{ show.network.name }}</p>
+                     <p class="break-normal"><span class="text-neutral-500">Distributions :</span> {{ cast }}</p>
+                     <p><span class="text-neutral-500">Genres :</span> {{ show.genres.join(", ") }}</p>
                   </div>
                </div>
             </div>
@@ -105,11 +124,12 @@
 </template>
 
 <script>
-import { ref, toRefs } from "vue";
+import { ref, toRefs, computed, watch } from "vue";
 import { TransitionRoot, Dialog, DialogOverlay, DialogTitle, DialogDescription, Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import IconsComponent from "../IconsComponent.vue";
 import RatingComponent from "./RatingComponent.vue";
 import EpisodeCardComponent from "./EpisodeCardComponent.vue";
+import axios from "axios";
 
 export default {
    props: ["is_open", "show", "show_episodes"],
@@ -130,10 +150,42 @@ export default {
    setup(props, { emit }) {
       let season = ref(1);
       let menu_season = ref(false);
+      let cast = ref(null);
+      const { show } = toRefs(props);
+      let show_cast = ref(null);
+
+      async function getShowCast(id = 0) {
+         try {
+            show_cast.value = await axios.get(`https://api.tvmaze.com/shows/${id}/cast`);
+            cast.value = formatShowCast(show_cast.value.data);
+            console.log(cast);
+         } catch (error) {
+            console.error(error);
+         }
+      }
+      function formatShowCast(array_cast) {
+         let array = [];
+         if (array_cast)
+            array_cast.forEach((element) => {
+               array.push(element.person.name);
+            });
+
+         return array.join(", ");
+      }
+
+      watch(show, (newV) => {
+         if (newV) {
+            getShowCast(show.value.id);
+         }
+      });
 
       return {
          season,
          menu_season,
+         cast,
+         show_cast,
+         getShowCast,
+         formatShowCast,
          setIsOpen(value) {
             emit("update:is_open", value);
          },

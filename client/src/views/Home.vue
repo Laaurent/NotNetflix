@@ -22,6 +22,7 @@ export default {
    setup() {
       let is_open = ref(false);
       let show_episodes = ref(null);
+      let show_cast = ref(null);
       let show_tmp = null;
       const categories = ["success", "trends", "news", "top", "documentary"];
       const store = useShows();
@@ -32,7 +33,6 @@ export default {
       let shows = ref(store.shows);
 
       async function getShowEpisodes(id = 0) {
-         console.log(id);
          try {
             show_episodes.value = await axios.get(`https://api.tvmaze.com/shows/${id}/episodes`);
          } catch (error) {
