@@ -4,7 +4,7 @@ const user_handler = require('../handlers/user.handler')
 
 module.exports = function(app,Joi,validator){
 const userSchema = Joi.object({
-    username: Joi.string().required(),
+    email: Joi.string().required(),
     password: Joi.string().required(),
 })
 app.post('/signin',[authJwt.checkIdentity],validator.body(userSchema),auth_handler.SignIn)

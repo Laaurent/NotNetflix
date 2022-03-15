@@ -6,7 +6,7 @@ const SignIn = async(req, res) => {
 try{
     let user = await User.findOne({
         where: {
-            username: req.body.username,
+            email: req.body.email,
         },
     })
     if (user) {
@@ -18,7 +18,7 @@ try{
         res.cookie('authCookie', token, { maxAge: 86400000 });
         res.status(200).send({
             id: user.id,
-            username: user.username,
+            email: user.email,
             accessToken: token,
         });
     }
