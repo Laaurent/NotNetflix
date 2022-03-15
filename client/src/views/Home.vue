@@ -30,7 +30,6 @@ export default {
       onMounted(() => {
          categories.forEach((cat, idx) => store.getShows(idx));
       });
-
       let shows = ref(store.shows);
 
       const random_show = computed(() => {
@@ -46,7 +45,16 @@ export default {
          }
       }
 
-      return { show_tmp, is_open, store, categories, shows, show_episodes, random_show, getShowEpisodes };
+      return {
+         show_tmp,
+         is_open,
+         store,
+         categories,
+         shows,
+         show_episodes,
+         random_show,
+         getShowEpisodes,
+      };
    },
 };
 </script>
