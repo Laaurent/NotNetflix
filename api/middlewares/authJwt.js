@@ -38,7 +38,7 @@ let checkIdentity = async (req, res, next) => {
 
         let user = await models.User.findOne({
             where: {
-                username: req.body.username,
+                email: req.body.email,
             },
         })
         if (user){
@@ -91,7 +91,7 @@ try{
 
     let user = await models.User.findOne({
         where: {
-            username: req.body.username,
+            email: req.body.email,
         },
     })
     if (user) {
