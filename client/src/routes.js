@@ -1,5 +1,6 @@
 import Home from "./views/Home.vue";
 import About from "./views/About.vue";
+import Search from "./views/Search.vue";
 import LogIn from "./views/LogIn.vue";
 import NotFound from "./views/NotFound.vue";
 
