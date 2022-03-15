@@ -37,11 +37,11 @@
                         <div class="header__text_content flex flex-col gap-2 py-4">
                            <h2 class="text-3xl font-semibold" v-html="show.name"></h2>
                            <div class="header__text_content_buttons flex gap-2 items-center">
-                              <button class="btn flex items-center gap-2 px-5 py-1 text-xl rounded bg-white text-black">
+                              <button class="btn flex items-center gap-2 px-5 py-1 text-xl rounded bg-white text-black" @click="goToUrl()">
                                  <IconsComponent icon="play" color="black"></IconsComponent>
                                  Lecture
                               </button>
-                              <IconsComponent icon="comment" color="white" @click="comment = !comment"></IconsComponent>
+                              <IconsComponent icon="comment" :color="comment ? 'black' : 'white'" @click="comment = !comment"></IconsComponent>
                               <IconsComponent icon="like" color="white"></IconsComponent>
                            </div>
                         </div>
@@ -54,9 +54,15 @@
                <div class="px-12 flex flex-col gap-8">
                   <DialogDescription>
                      <div class="mb-6" v-if="comment">
-                        <label for="comment">Ajouter un commentaire</label>
-                        <textarea class="w-full h-24 rounded resize-none bg-neutral-800 border-none" id="comment" cols="30" rows="10"></textarea>
-                        <button class="btn bg-neutral-800 px-4 py-1 rounded">Envoyer</button>
+                        <label for="comment text-sm">Ajouter un commentaire</label>
+                        <textarea
+                           class="focus:outline-none focus:border-sky-500 w-full h-24 rounded resize-none bg-neutral-800 border-none"
+                           id="comment"
+                           cols="30"
+                           rows="10"
+                           placeholder="laissez un commentaire ..."
+                        ></textarea>
+                        <button class="btn bg-neutral-800 px-4 py-1 rounded hover:bg-neutral-700">Envoyer</button>
                      </div>
 
                      <div class="description flex gap-10">
@@ -223,5 +229,10 @@ export default {
 }
 .h-mysize {
    height: 30rem;
+}
+textarea:focus {
+   outline: none !important;
+   border: none !important;
+   --tw-ring-color: none;
 }
 </style>

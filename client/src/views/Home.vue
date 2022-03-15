@@ -19,6 +19,7 @@ export default {
       CardComponent,
       NavbarComponent,
       FooterComponent,
+      PulseLoader,
    },
    setup() {
       let is_open = ref(false);
@@ -40,8 +41,8 @@ export default {
       });
 
       const random_show = computed(() => {
-         let random = Math.floor(Math.random() * allShows.value.length == 0 ? 0 : allShows.value.length - 1);
-         return allShows.value.length > 0 ? allShows.value[random][Math.floor(Math.random() * allShows.value[random]?.length - 1)] : null;
+         let random = Math.floor(Math.random() * (allShows.value.length == 0 ? 0 : allShows.value.length - 1));
+         return allShows.value.length > 0 ? allShows.value[random] : null;
       });
 
       async function getShowEpisodes(id = 0) {
@@ -85,7 +86,9 @@ export default {
          </section>
          <div class="px-12">
             <SliderComponent v-for="(category, idx) in categories" :key="category" :shows="shows[idx]" :title="category">
+               <pulse-loader class="w-full flex justify-center" v-if="!shows[idx]" :loading="true" color="#262626" size="16px"></pulse-loader>
                <CardComponent
+                  v-else
                   v-for="(show, index) in shows[idx]"
                   :key="'item-' + category + '_' + index"
                   :item="show"

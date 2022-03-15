@@ -9,7 +9,7 @@
                <p class="line-clamp-3" v-html="show?.summary.slice(3).slice(0, -4)"></p>
             </div>
             <div class="item_actions flex gap-2">
-               <button class="btn flex items-center gap-2 px-5 py-2 text-xl rounded bg-white text-black" @click="$emit('click:getInfos')">
+               <button class="btn flex items-center gap-2 px-5 py-2 text-xl rounded bg-white text-black" @click="goToUrl()">
                   <IconsComponent icon="play" color="black"></IconsComponent>
                   Lecture
                </button>
@@ -27,10 +27,20 @@
 </template>
 
 <script>
+import { toRefs } from "vue";
 import IconsComponent from "../IconsComponent.vue";
 export default {
    props: ["show"],
    components: { IconsComponent },
+   setup(props) {
+      const { show } = toRefs(props);
+
+      function goToUrl() {
+         window.open(`https://www.youtube.com/results?search_query=${show.value.name}+serie`, "_blank");
+      }
+
+      return { goToUrl };
+   },
 };
 </script>
 
