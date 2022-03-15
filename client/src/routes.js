@@ -1,14 +1,14 @@
 import Home from './views/Home.vue'
 import LogIn from './views/LogIn.vue'
-import Intro from './views/Intro.vue'
+// import Intro from './views/Intro.vue'
 import About from './views/About.vue'
 import NotFound from './views/NotFound.vue'
 
 /** @type {import('vue-router').RouterOptions['routes']} */
 export const routes = [
-  { path: '/browse', component: Home, meta: { title: 'Home' } },
+  { path: '/', component: Home, meta: { title: 'Home' } },
   { path: '/login', component: LogIn, meta: { title: 'LogIn' } },
-  { path: '/', component: Intro, meta: { title: 'Intro' } },
+  // { path: '/intro', component: Intro, meta: { title: 'Intro' } },
   {
     path: '/about',
     meta: { title: 'About' },
