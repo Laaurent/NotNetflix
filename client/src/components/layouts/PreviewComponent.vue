@@ -113,13 +113,7 @@
                      <section class="flex flex-col" v-if="show_episodes">
                         <hr style="border: 0.5px solid #303030" />
 
-                        <pulse-loader
-                           class="w-full my-10 flex justify-center"
-                           v-if="!show_episodes.data"
-                           :loading="true"
-                           color="#262626"
-                           size="16px"
-                        ></pulse-loader>
+                        <pulse-loader class="w-full my-10 flex justify-center" v-if="!show_episodes" :loading="true" color="#262626" size="16px"></pulse-loader>
                         <EpisodeCardComponent
                            v-else
                            v-for="(episode, index) in show_episodes.data.filter((element) => element.season == season)"
