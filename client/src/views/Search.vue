@@ -27,16 +27,7 @@
 <script>
 import NavbarComponent from "@/components/layouts/NavbarComponent.vue";
 import FooterComponent from "@/components/layouts/FooterComponent.vue";
-import {
-  computed,
-  onActivated,
-  onBeforeUpdate,
-  onMounted,
-  onUpdated,
-  ref,
-  toRefs,
-  watch,
-} from "vue";
+import { onMounted, ref, toRefs, watch } from "vue";
 import { useShows } from "@/store/useShows";
 export default {
   name: "Search",
@@ -47,10 +38,13 @@ export default {
     const store = useShows();
     let shows = ref(null);
 
-    onUpdated(async () => {
-      await store.getSearch(query.value);
-      shows.value = store.search;
-    });
+    watch(
+      () => query.value,
+      async () => {
+        await store.getSearch(query.value);
+        shows.value = store.search;
+      }
+    );
 
     onMounted(async () => {
       await store.getSearch(query.value);
