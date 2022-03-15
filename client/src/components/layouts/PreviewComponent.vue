@@ -14,6 +14,7 @@
          @close="
             setIsOpen(false);
             season = 1;
+            comment = false;
          "
          class="fixed inset-0 z-30 overflow-y-auto"
       >
@@ -29,6 +30,7 @@
                               @click="
                                  setIsOpen(false);
                                  season = 1;
+                                 comment = false;
                               "
                            >
                               <IconsComponent icon="close" color="white"></IconsComponent>
