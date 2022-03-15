@@ -4,17 +4,23 @@ import axios from "axios";
 export const useShows = defineStore("shows", {
    state: () => ({
       shows: [],
+      filteredShows: [],
       show: {},
       search: [],
+      genres: [],
    }),
 
    getters: {},
 
    actions: {
-      async getShows(page) {
-         const shows = await axios.get("https://api.tvmaze.com/shows?page=" + page);
-         console.log("ok");
-         this.shows.push(shows.data);
+      async getShows() {
+         await axios.get("https://api.tvmaze.com/shows").then((data) => (this.shows = data.data));
+         this.genres = [...new Set(this.shows.map((s) => s.genres).flat())];
+      },
+      getFilteredShows() {
+         this.filteredShows = this.genres.map((g) => {
+            return this.shows.filter((s) => s.genres.includes(g));
+         });
       },
       async getLastEpisodes() {
          const shows = await axios.get("https://api.tvmaze.com/shows");

@@ -19,24 +19,29 @@ export default {
       CardComponent,
       NavbarComponent,
       FooterComponent,
-      PulseLoader,
    },
    setup() {
       let is_open = ref(false);
       let show_episodes = ref(null);
       let show_cast = ref(null);
       let show_tmp = null;
-      const categories = ["success", "trends", "news", "top", "documentary"];
       const store = useShows();
 
-      onMounted(() => {
-         categories.forEach((cat, idx) => store.getShows(idx));
+      const allShows = ref([]);
+      const shows = ref([]);
+      const categories = ref([]);
+
+      onMounted(async () => {
+         await store.getShows();
+         store.getFilteredShows();
+         allShows.value = store.shows;
+         shows.value = store.filteredShows;
+         categories.value = store.genres;
       });
-      let shows = ref(store.shows);
 
       const random_show = computed(() => {
-         let random = Math.floor(Math.random() * shows.value.length == 0 ? 0 : shows.value.length - 1);
-         return shows.value.length > 0 ? shows.value[random][Math.floor(Math.random() * shows.value[random]?.length - 1)] : null;
+         let random = Math.floor(Math.random() * allShows.value.length == 0 ? 0 : allShows.value.length - 1);
+         return allShows.value.length > 0 ? allShows.value[random][Math.floor(Math.random() * allShows.value[random]?.length - 1)] : null;
       });
 
       async function getShowEpisodes(id = 0) {
@@ -46,7 +51,9 @@ export default {
             console.error(error);
          }
       }
+
       return {
+         allShows,
          show_tmp,
          is_open,
          store,
@@ -78,9 +85,7 @@ export default {
          </section>
          <div class="px-12">
             <SliderComponent v-for="(category, idx) in categories" :key="category" :shows="shows[idx]" :title="category">
-               <pulse-loader class="w-full flex justify-center" v-if="!shows[idx]" :loading="true" color="#262626" size="16px"></pulse-loader>
                <CardComponent
-                  v-else
                   v-for="(show, index) in shows[idx]"
                   :key="'item-' + category + '_' + index"
                   :item="show"
