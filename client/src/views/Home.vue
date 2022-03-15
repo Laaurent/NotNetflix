@@ -10,89 +10,116 @@ import PreviewComponent from "@/components/layouts/PreviewComponent.vue";
 import CardComponent from "@/components/layouts/CardComponent.vue";
 import axios from "axios";
 export default {
-   name: "Home",
-   components: {
-      HeroComponent,
-      SliderComponent,
-      PreviewComponent,
-      CardComponent,
-      NavbarComponent,
-      FooterComponent,
-   },
-   setup() {
-      let is_open = ref(false);
-      let show_episodes = ref(null);
-      let show_cast = ref(null);
-      let show_tmp = null;
-      const categories = ["success", "trends", "news", "top", "documentary"];
-      const store = useShows();
+  name: "Home",
+  components: {
+    HeroComponent,
+    SliderComponent,
+    PreviewComponent,
+    CardComponent,
+    NavbarComponent,
+    FooterComponent,
+  },
+  setup() {
+    let is_open = ref(false);
+    let show_episodes = ref(null);
+    let show_cast = ref(null);
+    let show_tmp = null;
+    const store = useShows();
 
-      onMounted(() => {
-         categories.forEach((cat, idx) => store.getShows(idx));
-      });
-      let shows = ref(store.shows);
+    const allShows = ref([]);
+    const shows = ref([]);
+    const categories = ref([]);
 
-      const random_show = computed(() => {
-         let random = Math.floor(Math.random() * shows.value.length == 0 ? 0 : shows.value.length - 1);
-         return shows.value.length > 0 ? shows.value[random][Math.floor(Math.random() * shows.value[random]?.length - 1)] : null;
-      });
+    onMounted(async () => {
+      await store.getShows();
+      store.getFilteredShows();
+      allShows.value = store.shows;
+      shows.value = store.filteredShows;
+      categories.value = store.genres;
+    });
 
-      async function getShowEpisodes(id = 0) {
-         try {
-            show_episodes.value = await axios.get(`https://api.tvmaze.com/shows/${id}/episodes`);
-         } catch (error) {
-            console.error(error);
-         }
+    const random_show = computed(() => {
+      let random = Math.floor(
+        Math.random() * allShows.value.length == 0
+          ? 0
+          : allShows.value.length - 1
+      );
+      return allShows.value.length > 0
+        ? allShows.value[random][
+            Math.floor(Math.random() * allShows.value[random]?.length - 1)
+          ]
+        : null;
+    });
+
+    async function getShowEpisodes(id = 0) {
+      try {
+        show_episodes.value = await axios.get(
+          `https://api.tvmaze.com/shows/${id}/episodes`
+        );
+      } catch (error) {
+        console.error(error);
       }
+    }
 
-      return {
-         show_tmp,
-         is_open,
-         store,
-         categories,
-         shows,
-         show_episodes,
-         random_show,
-         getShowEpisodes,
-      };
-   },
+    return {
+      allShows,
+      show_tmp,
+      is_open,
+      store,
+      categories,
+      shows,
+      show_episodes,
+      random_show,
+      getShowEpisodes,
+    };
+  },
 };
 </script>
 
 <template>
-   <div class="bg-neutral-900 text-sm text-white">
-      <header>
-         <NavbarComponent></NavbarComponent>
-      </header>
-      <article>
-         <section>
-            <HeroComponent
-               :show="random_show"
-               @click:getInfos="
-                  is_open = true;
-                  show_tmp = random_show;
-                  getShowEpisodes(show_tmp.id);
-               "
-            ></HeroComponent>
-         </section>
-         <div class="px-12">
-            <SliderComponent v-for="(category, idx) in categories" :key="category" :shows="shows[idx]" :title="category">
-               <CardComponent
-                  v-for="(show, index) in shows[idx]"
-                  :key="'item-' + category + '_' + index"
-                  :item="show"
-                  @click="
-                     is_open = true;
-                     show_tmp = show;
-                     getShowEpisodes(show_tmp.id);
-                  "
-               ></CardComponent>
-            </SliderComponent>
-         </div>
-         <PreviewComponent :show="show_tmp" :show_episodes="show_episodes" :is_open="is_open" @update:is_open="is_open = $event"></PreviewComponent>
-      </article>
-      <footer>
-         <FooterComponent></FooterComponent>
-      </footer>
-   </div>
+  <div class="bg-neutral-900 text-sm text-white">
+    <header>
+      <NavbarComponent></NavbarComponent>
+    </header>
+    <article>
+      <section>
+        <HeroComponent
+          :show="random_show"
+          @click:getInfos="
+            is_open = true;
+            show_tmp = random_show;
+            getShowEpisodes(show_tmp.id);
+          "
+        ></HeroComponent>
+      </section>
+      <div class="px-12">
+        <SliderComponent
+          v-for="(category, idx) in categories"
+          :key="category"
+          :shows="shows[idx]"
+          :title="category"
+        >
+          <CardComponent
+            v-for="(show, index) in shows[idx]"
+            :key="'item-' + category + '_' + index"
+            :item="show"
+            @click="
+              is_open = true;
+              show_tmp = show;
+              getShowEpisodes(show_tmp.id);
+            "
+          ></CardComponent>
+        </SliderComponent>
+      </div>
+      <PreviewComponent
+        :show="show_tmp"
+        :show_episodes="show_episodes"
+        :is_open="is_open"
+        @update:is_open="is_open = $event"
+      ></PreviewComponent>
+    </article>
+    <footer>
+      <FooterComponent></FooterComponent>
+    </footer>
+  </div>
 </template>
