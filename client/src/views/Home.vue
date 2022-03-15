@@ -9,6 +9,7 @@ import { onMounted, computed, ref } from "@vue/runtime-core";
 import PreviewComponent from "@/components/layouts/PreviewComponent.vue";
 import CardComponent from "@/components/layouts/CardComponent.vue";
 import axios from "axios";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 export default {
    name: "Home",
    components: {
@@ -18,6 +19,7 @@ export default {
       CardComponent,
       NavbarComponent,
       FooterComponent,
+      PulseLoader,
    },
    setup() {
       let is_open = ref(false);
@@ -44,7 +46,6 @@ export default {
             console.error(error);
          }
       }
-
       return {
          show_tmp,
          is_open,
@@ -77,7 +78,9 @@ export default {
          </section>
          <div class="px-12">
             <SliderComponent v-for="(category, idx) in categories" :key="category" :shows="shows[idx]" :title="category">
+               <pulse-loader class="w-full flex justify-center" v-if="!shows[idx]" :loading="true" color="#262626" size="16px"></pulse-loader>
                <CardComponent
+                  v-else
                   v-for="(show, index) in shows[idx]"
                   :key="'item-' + category + '_' + index"
                   :item="show"

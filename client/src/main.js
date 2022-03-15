@@ -8,8 +8,8 @@ import { createPinia } from "pinia";
 const app = createApp(App);
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes,
+   history: createWebHistory(),
+   routes,
 });
 
 app.use(createPinia());

@@ -1,5 +1,5 @@
 <template>
-   <article class="w-full flex py-5 px-10 gap-7 items-center hover:bg-neutral-800" style="border-bottom: 0.5px solid #303030">
+   <article class="cursor-pointer w-full flex py-5 px-10 gap-7 items-center hover:bg-neutral-800" style="border-bottom: 0.5px solid #303030">
       <h2 class="text-2xl">{{ index }}</h2>
       <img
          class="flex-none w-40 rounded"
