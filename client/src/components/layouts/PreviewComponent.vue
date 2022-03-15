@@ -63,8 +63,9 @@
                            cols="30"
                            rows="10"
                            placeholder="laissez un commentaire ..."
+                           v-model="contentComment"
                         ></textarea>
-                        <button class="btn bg-neutral-800 px-4 py-1 rounded hover:bg-neutral-700">Envoyer</button>
+                        <button class="btn bg-neutral-800 px-4 py-1 rounded hover:bg-neutral-700" @click="submitComment">Envoyer</button>
                      </div>
 
                      <div class="description flex gap-10">
@@ -178,6 +179,7 @@ export default {
       const { show } = toRefs(props);
       let show_cast = ref(null);
       let comment = ref(false);
+      let contentComment = ref(null)
 
       async function getShowCast(id = 0) {
          try {
@@ -202,6 +204,16 @@ export default {
          window.open(`https://www.youtube.com/results?search_query=${show.value.name}+season+${season.value}`, "_blank");
       }
 
+      function submitComment(){
+         axios.post('http://localhost:4000/comments', {content: contentComment.value, showId: show.value.id}, {withCredentials: true})
+         .then(res=>{
+         console.log('Commentaire envoyé')
+         this.comment = false;
+         }).catch(err=>{
+            console.log(err)
+         })
+      }
+
       watch(show, (newV) => {
          if (newV) {
             getShowCast(show.value.id);
@@ -220,6 +232,8 @@ export default {
          setIsOpen(value) {
             emit("update:is_open", value);
          },
+         submitComment,
+         contentComment
       };
    },
 };
