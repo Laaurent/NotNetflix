@@ -9,10 +9,10 @@ import NotFound from "./views/NotFound.vue";
 export const routes = [
    { path: "/", component: Home, meta: { title: "Home" }, name: "Home",
     beforeEnter: (to, from)=>{
-      console.log(document.cookie)
-      let cookie = document.cookie.split('=')
-      if(cookie[1]) return true
-      else return false
+      // console.log(document.cookie)
+      // let cookie = document.cookie.split('=')
+      // if(cookie[1]) return true
+      // else return false
     }
   },
    { path: "/login", component: LogIn, meta: { title: "LogIn" } },
