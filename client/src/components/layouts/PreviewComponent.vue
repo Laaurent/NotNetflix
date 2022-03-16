@@ -15,6 +15,7 @@
             setIsOpen(false);
             season = 1;
             comment = false;
+            showComments = false;
          "
          class="fixed inset-0 z-30 overflow-y-auto"
       >
@@ -31,6 +32,7 @@
                                  setIsOpen(false);
                                  season = 1;
                                  comment = false;
+                                 showComments = false;
                               "
                            >
                               <IconsComponent icon="close" color="white"></IconsComponent>
@@ -78,7 +80,7 @@
                               class="btn bg-neutral-800 px-4 py-1 rounded hover:bg-neutral-700"
                               @click="
                                  submitComment;
-                                 showComments = !showComments;
+                                 showComments = false;
                               "
                            >
                               Envoyer
