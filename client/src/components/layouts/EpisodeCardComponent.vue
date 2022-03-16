@@ -17,7 +17,7 @@
          </div>
 
          <p class="text-xs line-clamp-3">
-            {{ episode.summary.slice(3).slice(0, -4) }}
+            {{ episode.summary?.slice(3).slice(0, -4) }}
          </p>
       </div>
    </article>

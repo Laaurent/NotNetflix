@@ -1,5 +1,5 @@
 <template>
-   <div class="footer text-xs text-neutral-500 flex justify-center pt-6">
+   <div class="footer text-xs text-neutral-500 flex justify-center pt-6 max-h-ful">
       <div class="flex flex-col">
          <div class="footer__networks flex py-2 gap-2">
             <div class="footer__networks_item"><IconsComponent icon="facebook" color="white"></IconsComponent></div>
