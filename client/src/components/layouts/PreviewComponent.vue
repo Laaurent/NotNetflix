@@ -74,7 +74,15 @@
                            v-model="contentComment"
                         ></textarea>
                         <div class="flex items-center gap-2">
-                           <button class="btn bg-neutral-800 px-4 py-1 rounded hover:bg-neutral-700" @click="submitComment">Envoyer</button>
+                           <button
+                              class="btn bg-neutral-800 px-4 py-1 rounded hover:bg-neutral-700"
+                              @click="
+                                 submitComment;
+                                 showComments = !showComments;
+                              "
+                           >
+                              Envoyer
+                           </button>
                            <p class="text-red-800 italic text-sm" v-if="error">{{ error }}</p>
                         </div>
                      </div>
@@ -100,6 +108,9 @@
                            <p class="break-normal">
                               <span class="text-neutral-500">Genres :</span>
                               {{ show.genres.join(", ") }}
+                           </p>
+                           <p>
+                              <a class="text-sm text-neutral-500 underline underline-offset-1" href="#comments">Voir les commentaires</a>
                            </p>
                         </div>
                      </div>
@@ -156,15 +167,18 @@
                         {{ show.genres.join(", ") }}
                      </p>
                   </div>
-                  <div class="comments__bottom">
-                     <button @click="showComments = !showComments">Voir les commentaires</button>
-                     <DialogDescription v-if="allComments != null">
-                        <div v-for="i in allComments" :key="i.id" class="bg-neutral-700 rounded">
-                           <p>{{ i.userId }}</p>
+                  <div id="comments" class="comments__bottom">
+                     <button class="mb-4 flex gap-2" @click="showComments = !showComments">
+                        Voir les commentaires <IconsComponent v-if="!showComments" icon="caret_down" color="white"></IconsComponent
+                        ><IconsComponent v-else icon="caret_up" color="white"></IconsComponent>
+                     </button>
+                     <DialogDescription v-if="allComments && showComments" class="flex flex-col gap-2">
+                        <div v-for="i in allComments" :key="i.id" class="bg-neutral-800 py-5 px-10 rounded">
                            <p>{{ i.content }}</p>
-                           <hr />
+                           <p class="text-sm text-neutral-500">Écrit par : {{ i.userId }}</p>
                         </div>
                      </DialogDescription>
+                     <p class="text-sm text-neutral-500" v-else>Aucun commentaire ...</p>
                   </div>
                </div>
             </div>
@@ -215,7 +229,6 @@ export default {
       watch(showComments, async (newValue, oldValue) => {
          if (newValue) {
             await store.getComments(show.value.id);
-            console.log("truc");
             allComments.value = toRaw(store.getterComments);
          }
       });
