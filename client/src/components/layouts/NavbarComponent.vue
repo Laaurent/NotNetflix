@@ -65,7 +65,7 @@
                 <router-link to="/about">Centre d'aide</router-link>
               </li>
               <li class="hover:opacity:100 px-4 hover:bg-slate-700">
-                <router-link to="/about">Se déconnecter</router-link>
+                <router-link to="/about" @click="disconnect">Se déconnecter</router-link>
               </li>
             </ul>
           </PopoverPanel>
@@ -82,6 +82,7 @@ import { ref, onMounted } from "vue";
 import { onBeforeUnmount } from "@vue/runtime-core";
 import IconsComponent from "../IconsComponent.vue";
 import { useRouter, useRoute } from "vue-router";
+import { useCookies } from "vue3-cookies";
 export default {
   name: "NavbarComponent",
   components: {
@@ -92,6 +93,7 @@ export default {
     SearchIcon,
     IconsComponent,
   },
+  
   setup() {
     const router = useRouter();
     let displaySearchbar = ref(false);
@@ -100,7 +102,11 @@ export default {
     let searchbarMinWidth = ref("searchbarMinWidth");
     let searchbarMaxWidth = ref("searchbarMaxWidth");
     let windowTop = ref(0);
+    const { cookies } = useCookies();
 
+   const disconnect = ()=>{
+      cookies.remove('authCookie')
+   }
     const user = {
       profilePic: "https://via.placeholder.com/150",
     };
@@ -126,6 +132,8 @@ export default {
     });
 
     return {
+       cookies,
+       disconnect,
       windowTop,
       displaySearchbar,
       displayProfileDropdown,

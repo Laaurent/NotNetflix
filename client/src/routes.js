@@ -7,7 +7,14 @@ import NotFound from "./views/NotFound.vue";
 
 /** @type {import('vue-router').RouterOptions['routes']} */
 export const routes = [
-   { path: "/", component: Home, meta: { title: "Home" }, name: "Home" },
+   { path: "/", component: Home, meta: { title: "Home" }, name: "Home",
+    beforeEnter: (to, from)=>{
+      console.log(document.cookie)
+      let cookie = document.cookie.split('=')
+      if(cookie[1]) return true
+      else return false
+    }
+  },
    { path: "/login", component: LogIn, meta: { title: "LogIn" } },
    { path: "/signup", component: SignUp, meta: { title: "SignUp" } },
    {
