@@ -174,13 +174,15 @@
                         Voir les commentaires <IconsComponent v-if="!showComments" icon="caret_down" color="white"></IconsComponent
                         ><IconsComponent v-else icon="caret_up" color="white"></IconsComponent>
                      </button>
-                     <DialogDescription v-if="allComments && showComments" class="flex flex-col gap-2">
-                        <div v-for="i in allComments" :key="i.id" class="bg-neutral-800 py-5 px-10 rounded">
-                           <p>{{ i.content }}</p>
-                           <p class="text-sm text-neutral-500">Écrit par : {{ i.userId }}</p>
-                        </div>
-                     </DialogDescription>
-                     <p class="text-sm text-neutral-500" v-else>Aucun commentaire ...</p>
+                     <div v-if="showComments">
+                        <DialogDescription v-if="allComments.length > 0" class="flex flex-col gap-2">
+                           <div v-for="i in allComments" :key="i.id" class="bg-neutral-800 py-5 px-10 rounded">
+                              <p>{{ i.content }}</p>
+                              <p class="text-sm text-neutral-500">Écrit par : {{ i.userId }}</p>
+                           </div>
+                        </DialogDescription>
+                        <p class="text-sm text-neutral-500" v-else>Aucun commentaire ...</p>
+                     </div>
                   </div>
                </div>
             </div>
