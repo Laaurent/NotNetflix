@@ -54,11 +54,7 @@ export default {
     let isHovered = ref(false);
     let seasons = ref(5);
 
-    // Open modale with show informations
-    const getInfo = () => {
-      console.log("here");
-    };
-    return { isHovered, genres, image, seasons, getInfo };
+    return { isHovered, genres, image, seasons };
   },
 };
 </script>
