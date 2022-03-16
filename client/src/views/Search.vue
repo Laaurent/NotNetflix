@@ -83,7 +83,7 @@ export default {
       try {
         show_episodes.value = await axios.get(
           `https://api.tvmaze.com/shows/${id}/episodes`
-        ).data;
+        );
       } catch (error) {
         console.error(error);
       }

@@ -312,7 +312,7 @@ export default {
           this.comment = false;
         })
         .catch(err => {
-          console.log(err);
+          console.error(err);
         });
     }
 
