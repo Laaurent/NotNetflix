@@ -54,7 +54,7 @@ export default {
     let isHovered = ref(false);
     let seasons = ref(5);
 
-    return { isHovered, genres, image, seasons, getInfo };
+    return { isHovered, genres, image, seasons };
   },
 };
 </script>
