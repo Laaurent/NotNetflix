@@ -74,6 +74,8 @@ export default {
             S'identifier
           </button>
         </form>
+        
+        <router-link to="/signup">S'inscrire</router-link>
       </div>
     </div>
 

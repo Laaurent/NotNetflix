@@ -16,6 +16,6 @@ module.exports = function(app, Joi, validator){
 app.post('/comments',[AuthJwt.verifyToken],validator.body(comSchema),handlers.createCommentaire)
 // app.patch('/comments/:id',[AuthJwt.verifyToken],validator.body(comSchema),validator.params(queryStringCom),handlers.modifyCommentaire)
 // app.delete('/comments/:id',[AuthJwt.verifyToken],validator.params(queryStringCom),handlers.deleteCommentaire)
-app.get('/comments/:id',[AuthJwt.verifyToken],validator.response(comSchema),validator.params(paramsStringCom),validator.query(queryStringCom),handlers.showCommentaires)
+app.get('/comments/:id',[AuthJwt.verifyToken],validator.params(paramsStringCom),validator.query(queryStringCom),handlers.showCommentaires)
 // app.get('/comments',[AuthJwt.verifyToken],handlers.showCommentaires)
 }

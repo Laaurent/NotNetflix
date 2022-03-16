@@ -56,6 +56,7 @@
                       Lecture
                     </button>
                     <IconsComponent
+                      class="cursor-pointer"
                       icon="comment"
                       :color="comment ? 'black' : 'white'"
                       @click="comment = !comment"
@@ -171,7 +172,7 @@
                         >
                         ({{
                           show_episodes.data.filter(
-                            element => element.season == i
+                            (element) => element.season == i
                           ).length
                         }}
                         épisodes)
@@ -193,7 +194,7 @@
                 <EpisodeCardComponent
                   v-else
                   v-for="(episode, index) in show_episodes.data.filter(
-                    element => element.season == season
+                    (element) => element.season == season
                   )"
                   :key="'episode_' + index"
                   :episode="episode"
@@ -222,6 +223,16 @@
                 {{ show.genres.join(", ") }}
               </p>
             </div>
+            <div class="comments__bottom">
+               <button @click="showComments = !showComments">Voir les commentaires</button>
+               <DialogDescription v-if="allComments != null">
+                  <div v-for="i in allComments" :key="i.id" class="bg-neutral-700 rounded">
+                     <p>{{i.userId}}</p>
+                     <p>{{i.content}}</p>    
+                     <hr/>
+                  </div>
+               </DialogDescription>
+            </div>
           </div>
         </div>
       </div>
@@ -230,7 +241,7 @@
 </template>
 
 <script>
-import { ref, toRefs, computed, watch } from "vue";
+import { ref, toRefs, computed, watch, toRaw } from "vue";
 import {
   TransitionRoot,
   Dialog,
@@ -247,6 +258,8 @@ import RatingComponent from "./RatingComponent.vue";
 import EpisodeCardComponent from "./EpisodeCardComponent.vue";
 import axios from "axios";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+import { storeToRefs } from "pinia";
+import {useShows} from '@/store/useShows'
 export default {
   props: ["is_open", "show", "show_episodes"],
   components: {
@@ -272,6 +285,16 @@ export default {
     let show_cast = ref(null);
     let comment = ref(false);
     let contentComment = ref(null);
+    let showComments = ref(false);
+    let allComments = ref(null)
+   let  store = useShows()
+    watch(showComments, async (newValue, oldValue)=>{
+       if (newValue) {
+         await store.getComments(show.value.id)
+         console.log('truc')
+         allComments.value = toRaw(store.getterComments)
+       }
+    })
 
     async function getShowCast(id = 0) {
       try {
@@ -286,7 +309,7 @@ export default {
     function formatShowCast(array_cast) {
       let array = [];
       if (array_cast)
-        array_cast.forEach(element => {
+        array_cast.forEach((element) => {
           array.push(element.person.name);
         });
 
@@ -307,22 +330,25 @@ export default {
           { content: contentComment.value, showId: show.value.id },
           { withCredentials: true }
         )
-        .then(res => {
+        .then((res) => {
           console.log("Commentaire envoyé");
           this.comment = false;
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err);
         });
     }
 
-    watch(show, newV => {
+    watch(show, (newV) => {
       if (newV) {
         getShowCast(show.value.id);
       }
     });
 
     return {
+       allComments,
+       store,
+       showComments,
       comment,
       season,
       menu_season,

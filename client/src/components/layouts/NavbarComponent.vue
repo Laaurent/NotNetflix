@@ -65,7 +65,7 @@
                 <router-link to="/about">Centre d'aide</router-link>
               </li>
               <li class="hover:opacity:100 px-4 hover:bg-slate-700">
-                <router-link to="/about" @click="disconnect">Se déconnecter</router-link>
+                <router-link to="/signin" @click="disconnect">Se déconnecter</router-link>
               </li>
             </ul>
           </PopoverPanel>
