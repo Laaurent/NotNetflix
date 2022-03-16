@@ -1,5 +1,10 @@
 # NotNetflix
 
+
+## Groupe
+- BALI Soliman
+- Piault Florian
+- QUENEL Laurent
 ### Premier terminal
 ```
 cd api
