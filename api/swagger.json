@@ -1,0 +1,519 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "NotNetflix",
+    "description": "This is the backend for the NotNetflix application.",
+    "version": "1.0.0",
+    "licence": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "http://www.localhost:4000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": "Sign in and sign out routes"
+    },
+    {
+      "name": "Comment",
+      "description": "Comment routes"
+    },
+    {
+      "name": "Role",
+      "description": "Role routes"
+    },
+    {
+      "name": "Show",
+      "description": "Show routes"
+    },
+    {
+      "name": "User",
+      "description": "User routes"
+    },
+    {
+      "name": "Coincap",
+      "description": "Coincap routes"
+    }
+  ],
+  "schemes": ["http", "https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/signin": {
+      "post": {
+        "tags": ["Authentication"],
+        "description": "Sign in with email and password",
+        "operationId": "Signin",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "body",
+            "description": "Email",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "email"
+            }
+          },
+          {
+            "name": "password",
+            "in": "body",
+            "description": "Password",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "password"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful sign in",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid email or password"
+          }
+        }
+      }
+    },
+    "/signup": {
+      "post": {
+        "tags": ["Authentication"],
+        "description": "Sign up with email and password",
+        "operationId": "Signup",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "body",
+            "description": "Email",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "email"
+            }
+          },
+          {
+            "name": "password",
+            "in": "body",
+            "description": "Password",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "password"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful sign up",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid email or password"
+          }
+        }
+      }
+    },
+    "/comments/{id}": {
+      "get": {
+        "tags": ["Comment"],
+        "summary": "Get comment",
+        "description": "Get comment by id",
+        "operationId": "GetComment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Comment id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful get comment",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "userId": {
+                  "type": "integer"
+                },
+                "showId": {
+                  "type": "integer"
+                },
+                "comment": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "type": "date-time"
+                },
+                "updatedAt": {
+                  "type": "date-time"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid comment id"
+          }
+        }
+      }
+    },
+    "/comments": {
+      "post": {
+        "tags": ["Comment"],
+        "summary": "Create comment",
+        "description": "Create comment",
+        "operationId": "CreateComment",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "body",
+            "description": "User id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "showId",
+            "in": "body",
+            "description": "Show id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "comment",
+            "in": "body",
+            "description": "Comment",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful create comment",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "userId": {
+                  "type": "integer"
+                },
+                "showId": {
+                  "type": "integer"
+                },
+                "comment": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "type": "date-time"
+                },
+                "updatedAt": {
+                  "type": "date-time"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid user id or show id"
+          }
+        }
+      }
+    },
+    "/roles": {
+      "post": {
+        "tags": ["Role"],
+        "summary": "Create role",
+        "description": "Create role",
+        "operationId": "CreateRole",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "body",
+            "description": "Name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful create role",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "type": "date-time"
+                },
+                "updatedAt": {
+                  "type": "date-time"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid role name"
+          }
+        }
+      }
+    },
+    "/shows": {
+      "get": {
+        "tags": ["Show"],
+        "summary": "Get shows",
+        "description": "Get shows",
+        "operationId": "GetShows",
+        "responses": {
+          "200": {
+            "description": "Successful get shows",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "400": {
+            "description": "Cannot get show"
+          }
+        }
+      }
+    },
+    "/shows/{id}": {
+      "get": {
+        "tags": ["Show"],
+        "summary": "Get show",
+        "description": "Get show by id",
+        "operationId": "GetShow",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Show id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful get show",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "image": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "type": "date-time"
+                },
+                "updatedAt": {
+                  "type": "date-time"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid show id"
+          }
+        }
+      }
+    },
+    "/shows/{id}/episodes": {
+      "get": {
+        "tags": ["Show"],
+        "summary": "Get episodes",
+        "description": "Get episodes",
+        "operationId": "GetEpisodes",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Show id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful get episodes",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "400": {
+            "description": "Invalid show id"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get users",
+        "description": "Get users",
+        "operationId": "GetUsers",
+        "responses": {
+          "200": {
+            "description": "Successful get users",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "400": {
+            "description": "Cannot get users"
+          }
+        }
+      },
+      "post": {
+        "tags": ["User"],
+        "summary": "Create user",
+        "description": "Create user",
+        "operationId": "CreateUser",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "body",
+            "description": "Name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "email",
+            "in": "body",
+            "description": "Email",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "password",
+            "in": "body",
+            "description": "Password",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful create user",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "type": "date-time"
+                },
+                "updatedAt": {
+                  "type": "date-time"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid user name or email or password"
+          }
+        }
+      }
+    },
+    "/coins": {
+      "get": {
+        "tags": ["Coincap"],
+        "summary": "Get coins",
+        "description": "Get coins",
+        "operationId": "GetCoins",
+        "responses": {
+          "200": {
+            "description": "Successful get coins",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "400": {
+            "description": "Cannot get coins"
+          }
+        }
+      }
+    },
+    "/coins/bitcoin": {
+      "get": {
+        "tags": ["Coincap"],
+        "summary": "Get bitcoin price",
+        "description": "Get bitcoin price",
+        "operationId": "GetBitcoinPrice",
+        "responses": {
+          "200": {
+            "description": "Successful get bitcoin price",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "400": {
+            "description": "Cannot get bitcoin price"
+          }
+        }
+      }
+    }
+  }
+}
