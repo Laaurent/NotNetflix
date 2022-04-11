@@ -58,3 +58,5 @@ http://localhost:4000/api-docs/
 - sequelize
 - sqlite3
 - sequelize-cli
+- swagger-jsdoc
+- swagger-ui-express
