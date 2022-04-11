@@ -24,34 +24,6 @@ exports.modifyRole = async (req, res) => {
       res.status(400).send({ message: "Bad Request" });
     });
 };
-exports.deleteRole = async (req, res) => {
-  // res.send('ALL Roles')
-  const role = await Role.destroy({
-    where: {
-      id: req.params.id,
-    },
-  })
-    .then((res) => {
-      res.send("Role deleted");
-    })
-    .catch((err) => {
-      res.status(400).send({ message: "Bad Request" });
-    });
-};
-exports.showRole = async (req, res) => {
-  // res.send('ALL Roles')
-  const role = await Role.findOne({
-    where: {
-      id: req.params.id,
-    },
-  })
-    .then((res) => {
-      res.send("Show Role");
-    })
-    .catch((err) => {
-      res.status(400).send({ message: "Bad Request" });
-    });
-};
 exports.showRoles = async (req, res) => {
   // res.send('ALL Roles')
   const role = await Role.findAll()
