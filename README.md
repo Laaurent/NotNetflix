@@ -2,9 +2,9 @@
 
 ## Groupe
 
--  BALI Soliman
--  Piault Florian
--  QUENEL Laurent
+-  BALI Soliman, soliman.bali@mail-ecv.fr
+-  Piault Florian, florian.piault@mail-ecv.fr
+-  QUENEL Laurent, laurent.quenel@hotmail.fr
 
 ### Premier terminal
 
@@ -24,9 +24,7 @@ npm run dev
 
 ### Swagger
 
-```
-http://localhost:4000/api-docs/
-```
+[Api-docs](http://localhost:4000/api-docs/).
 
 ### Dépendances front :
 
