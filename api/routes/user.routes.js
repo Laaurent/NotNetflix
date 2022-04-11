@@ -30,13 +30,7 @@ module.exports = function (app, Joi, validator) {
     "/users/:id",
     [AuthJwt.verifyToken, AuthJwt.isAuthorize],
     validator.params(paramsStringCom),
-    validator.response(userSchema),
     getOneUser
   );
-  app.get(
-    "/users",
-    [AuthJwt.verifyToken, AuthJwt.isAuthorize],
-    validator.response(usersSchema),
-    getManyUsers
-  );
+  app.get("/users", [AuthJwt.verifyToken, AuthJwt.isAuthorize], getManyUsers);
 };

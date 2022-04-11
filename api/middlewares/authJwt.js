@@ -1,5 +1,5 @@
 const config = require("../config/auth.config");
-const models = require("../models");
+const { User, Role } = require("../models");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
@@ -16,7 +16,7 @@ let verifyToken = async (req, res, next) => {
         });
       } else {
         try {
-          let user = await models.User.findByPk(decoded.id);
+          let user = await User.findByPk(decoded.id);
           if (user) next();
           else res.status(403).send({ message: "Token corrompu" });
         } catch (e) {
@@ -31,7 +31,7 @@ let verifyToken = async (req, res, next) => {
 
 let checkIdentity = async (req, res, next) => {
   try {
-    let user = await models.User.findOne({
+    let user = await User.findOne({
       where: {
         email: req.body.email,
       },
@@ -61,13 +61,19 @@ let checkIdentity = async (req, res, next) => {
 };
 
 let isAuthorize = async (req, res, next) => {
-  let decoded = jwt.decode(req.cookies.authcookie);
+  let decoded = jwt.decode(req.cookies.authCookie);
   try {
-    let user = await models.User.findByPk(decoded.id);
+    let user = await User.findByPk(decoded.id);
     if (user) {
-      let role = await user.getRole();
-      if (role.name == "ADMIN") {
+      //   Le get de l'instance ne fonctionne pas pour le moment, pour aucune raison je ne sais pas pourquoi
+      //   let role = await user.getRole();
+      let role = await Role.findByPk(user.roleId);
+      if (role.name === "ADMIN") {
         next();
+      } else {
+        res.status(403).send({
+          message: "Accès refusé",
+        });
       }
     } else {
       res.status(403).send({
@@ -82,7 +88,7 @@ let isAuthorize = async (req, res, next) => {
 };
 let checkDuplicate = async (req, res, next) => {
   try {
-    let user = await models.User.findOne({
+    let user = await User.findOne({
       where: {
         email: req.body.email,
       },
