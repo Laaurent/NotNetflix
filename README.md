@@ -19,6 +19,11 @@ npm i
 npm run dev
 ```
 
+### Swagger
+```
+http://localhost:4000/api-docs/
+```
+
 ### Dépendances front :
 - axios
 - pinia
