@@ -3,7 +3,7 @@
   "info": {
     "title": "NotNetflix",
     "description": "This is the backend for the NotNetflix application.",
-    "version": "1.0.0",
+    "version": "0.3.4",
     "licence": {
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
@@ -110,6 +110,15 @@
             "schema": {
               "type": "string",
               "format": "password"
+            }
+          },
+          {
+            "name": "role",
+            "in": "body",
+            "description": "Role type, could be 'USER' or 'ADMIN'",
+            "required": false,
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -247,6 +256,65 @@
             "description": "Invalid user id or show id"
           }
         }
+      },
+      "delete":{
+        "tags": ["Comment"],
+        "summary": "Delete comment",
+        "description": "Delete comment",
+        "operationId": "DeleteComment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Comment id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Commentaire deleted"
+          },
+          "400": {
+            "description": "Commentaire not deleted"
+          }
+        }
+      },
+      "patch":{
+        "tags": ["Comment"],
+        "summary": "Update comment",
+        "description": "Update comment",
+        "operationId": "UpdateComment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Comment id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "content",
+            "in": "body",
+            "description": "Content",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Commentaire updated"
+          },
+          "400": {
+            "description": "Commentaire not updated"
+          }
+        }
       }
     },
     "/roles": {
@@ -289,6 +357,37 @@
           },
           "400": {
             "description": "Invalid role name"
+          }
+        }
+      },
+      "get":{
+        "tags": ["Roles"],
+        "summary": "Get roles",
+        "description": "Get roles",
+        "operationId": "GetRole",
+        "responses": {
+          "200": {
+            "description": "Successful get role",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "type": "date-time"
+                },
+                "updatedAt": {
+                  "type": "date-time"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
           }
         }
       }
@@ -475,6 +574,90 @@
             "description": "Invalid user name or email or password"
           }
         }
+      }
+    },
+    "/users/{id}":{
+      "get": {
+        "tags": ["User"],
+        "summary": "Get user",
+        "description": "Get user by id",
+        "operationId": "GetUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful get user",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "type": "date-time"
+                },
+                "updatedAt": {
+                  "type": "date-time"
+                },
+                "roleId": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Resource not found"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["User"],
+        "summary": "Update user",
+        "description": "Update user",
+        "operationId": "UpdateUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "email",
+            "in": "body",
+            "description": "Email",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "password",
+            "in": "body",
+            "description": "Password",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }]
       }
     },
     "/coins": {
