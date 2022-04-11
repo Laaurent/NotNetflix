@@ -10,7 +10,9 @@ const createUser = async (req, res) => {
   });
   if (user) {
     let role = await user.setRole(
-      await Role.findOne({ where: { name: req.body.role } })
+      await Role.findOne({
+        where: { name: req.body.role ? req.body.role : "USER" },
+      })
     );
     if (role) {
       res.status(200).send("User created");
