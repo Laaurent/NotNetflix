@@ -6,7 +6,7 @@
 -  Piault Florian, florian.piault@mail-ecv.fr
 -  QUENEL Laurent, laurent.quenel@hotmail.fr
 
-### Premier terminal
+### Lancement de l'API NodeJS
 
 ```
 cd api
@@ -14,7 +14,7 @@ npm i
 nodemon
 ```
 
-### Deuxième terminal
+### Lancement du front VueJS
 
 ```
 cd client
@@ -65,7 +65,7 @@ npm run dev
 -  swagger-jsdoc
 -  swagger-ui-express
 
-### Middlewares
+### Middlewares API
 
 -  **verifyToken** : Verifie le token valide dans le header et donc que l'utilisateur soit bien connecté,
 -  **checkIdentity** : Verifie le mot de passe de l'utilisateur qui essaye de se connecter,
